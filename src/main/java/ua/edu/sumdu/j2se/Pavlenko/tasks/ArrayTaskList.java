@@ -27,7 +27,7 @@ public class ArrayTaskList {
     public boolean remove(Task task) {
         boolean isTaskPresent = false;
         int taskPos = 0;
-        for (int i = 0, j = 0; i < taskList.length; i++, j++) {
+        for (int i = 0; i < taskList.length; i++) {
             if (taskList[i] == task) {
                 isTaskPresent = true;
                 taskPos = i;
