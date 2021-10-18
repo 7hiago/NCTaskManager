@@ -5,17 +5,26 @@ package ua.edu.sumdu.j2se.Pavlenko.tasks;
  * @author Yevhenii Pavlenko
  */
 public class ArrayTaskList {
-    private Task[] taskList = new Task[]{};
+    private Task[] taskList = new Task[10];
+    private int size;
+    private static final double MULTIPLIER = 1.4;
 
     /**
      * Method for adding new task to task list
      * @param task - task for adding to list
      */
-    public  void add(Task task) {
-        Task[] temp = taskList.clone();
-        taskList = new Task[temp.length + 1];
-        System.arraycopy(temp, 0, taskList, 0, temp.length);
-        taskList[taskList.length - 1] = task;
+    public void add(Task task) {
+        if (size > taskList.length) {
+            Task[] temp = new Task[getNewArraySize(taskList.length)];
+            System.arraycopy(taskList, 0, temp, 0, taskList.length);
+            taskList = temp;
+        }
+        taskList[size] = task;
+        size++;
+    }
+
+    private int getNewArraySize(int currentSize){
+        return (int)(currentSize * MULTIPLIER);
     }
 
     /**
@@ -25,29 +34,33 @@ public class ArrayTaskList {
      *                 - false, when task was not exist in list
      */
     public boolean remove(Task task) {
-        boolean isTaskPresent = false;
-        int taskPos = 0;
-        for (int i = 0; i < taskList.length; i++) {
-            if (taskList[i] == task) {
-                isTaskPresent = true;
-                taskPos = i;
-                break;
-            }
-        }
-        if(isTaskPresent){
-            Task[] temp = taskList.clone();
-            taskList = new Task[temp.length - 1];
-            for (int i = 0, j = 0; i < temp.length; i++, j++) {
+        int taskPos = indexOf(task);
+        if(isTaskPresent(task)){
+            for (int i = 0, j = 0; i < taskList.length; i++, j++) {
                 if (taskPos == i) {
                     j--;
                     continue;
                 }
-                taskList[j] = temp[i];
+                taskList[j] = taskList[i];
             }
+            size--;
             return true;
         } else {
             return false;
         }
+    }
+
+    private int indexOf(Task task) {
+        for (int i = 0; i < taskList.length; i++) {
+            if (taskList[i].equals(task)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    private boolean isTaskPresent(Task task) {
+        return indexOf(task) >= 0;
     }
 
     /**
@@ -55,7 +68,7 @@ public class ArrayTaskList {
      * @return return amount of task in task list
      */
     public int size() {
-        return taskList.length;
+        return size;
     }
 
     /**
@@ -75,7 +88,7 @@ public class ArrayTaskList {
     public ArrayTaskList incoming(int from, int to) {
         ArrayTaskList list = new ArrayTaskList();
         for (Task task : taskList) {
-            if(task.getStartTime() > from && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to) {
+            if(task != null && task.getStartTime() > from && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to) {
                 list.add(task);
             }
         }
