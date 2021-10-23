@@ -1,7 +1,13 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
 /**
- * ArrayTaskList class
+ * ArrayTaskList - task list, based on an array and designed to store user tasks.
+ * List has the following functions:
+ *  - add tasks;
+ *  - remove tasks;
+ *  - return size of tasks list;
+ *  - return single task from list;
+ *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
 public class ArrayTaskList {
@@ -12,8 +18,10 @@ public class ArrayTaskList {
     /**
      * Method for adding new task to task list
      * @param task - task for adding to list
+     * @throws IllegalArgumentException if task is null
      */
-    public void add(Task task) {
+    public void add(Task task) throws IllegalArgumentException {
+        if(task == null) throw new IllegalArgumentException("Task should not be a null");
         if (size > taskList.length) {
             Task[] temp = new Task[getNewArraySize(taskList.length)];
             System.arraycopy(taskList, 0, temp, 0, taskList.length);
@@ -74,8 +82,10 @@ public class ArrayTaskList {
     /**
      * Method for getting task in specified location in task list
      * @return return task from task list
+     * @throws IndexOutOfBoundsException if index is out of range for the list
      */
-    public Task getTask(int index) {
+    public Task getTask(int index) throws IndexOutOfBoundsException{
+        if(index < 0 || index >= size) throw new IndexOutOfBoundsException("Index is out of range for the list");
         return taskList[index];
     }
 
