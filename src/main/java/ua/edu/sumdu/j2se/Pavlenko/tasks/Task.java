@@ -1,7 +1,15 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
 /**
- * Task class
+ * Task - data about event that user should perform at a certain period of time.
+ * Task has the following functions:
+ *  - create new task;
+ *  - change and return title;
+ *  - change and return time;
+ *  - change and return activity;
+ *  - return interval of repeat;
+ *  - return is repeated or not;
+ *  - return next moment of the task execution.
  * @author Yevhenii Pavlenko
  */
 public class Task {
@@ -16,11 +24,13 @@ public class Task {
      * Constructor - create new not active and not repeated task
      * @param title - task name (description)
      * @param time - execution time of this task
-     * @see #Task(String, int, int, int) 
+     * @see #Task(String, int, int, int)
+     * @throws IllegalArgumentException if time is negative
      */
-    public Task(String title, int time) {
+    public Task(String title, int time) throws IllegalArgumentException {
+        if(time < 0) throw new IllegalArgumentException("Timestamps should not be negative");
         setTitle(title);
-        this.time = time;
+        setTime(time);
         setActive(false);
     }
 
@@ -30,9 +40,12 @@ public class Task {
      * @param start - start execution time of this task
      * @param end - end execution time of this task
      * @param interval - time interval at which the task repeats execution
-     * @see #Task(String, int) 
+     * @see #Task(String, int)
+     * @throws IllegalArgumentException if start time or end time or interval time is negative
      */
-    public Task (String title, int start, int end, int interval) {
+    public Task (String title, int start, int end, int interval) throws IllegalArgumentException {
+        if(start < 0 || end < 0) throw new IllegalArgumentException("Timestamps should not be negative");
+        if(interval < 0) throw new IllegalArgumentException("Task repetition interval must be greater than zero");
         setTitle(title);
         setTime(start, end, interval);
         setActive(false);
