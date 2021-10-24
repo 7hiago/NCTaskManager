@@ -37,6 +37,7 @@ public class LinkedTaskList {
     /**
      * Method for adding new task to task list
      * @param task - task for adding to list
+     * @throws IllegalArgumentException if task is null
      */
     public void add(Task task) throws IllegalArgumentException{
         if(task == null) throw new IllegalArgumentException("Task should not be a null");
@@ -92,6 +93,7 @@ public class LinkedTaskList {
     /**
      * Method for getting task in specified location in task list
      * @return return task from task list
+     * @throws IndexOutOfBoundsException if index is out of range for the list
      */
     public Task getTask(int index) throws IndexOutOfBoundsException {
         if(index < 0 || index >= size) throw new IndexOutOfBoundsException("Index is out of range for the list");
