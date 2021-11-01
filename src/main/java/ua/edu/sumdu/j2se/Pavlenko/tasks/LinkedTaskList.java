@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
+import java.util.Iterator;
+
 /**
  * LinkedTaskList - task list, based on doubly linked list and designed to store user tasks.
  * List has the following functions:
@@ -10,7 +12,7 @@ package ua.edu.sumdu.j2se.Pavlenko.tasks;
  *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
-public class LinkedTaskList {
+public class LinkedTaskList extends AbstractTaskList{
 
     private class TaskListItem {
         private Task task;
@@ -36,9 +38,10 @@ public class LinkedTaskList {
 
     /**
      * Method for adding new task to task list
-     * @param task - task for adding to list
+     * @param task task for adding to list
      * @throws IllegalArgumentException if task is null
      */
+    @Override
     public void add(Task task) throws IllegalArgumentException{
         if(task == null) throw new IllegalArgumentException("Task should not be a null");
         TaskListItem newItem = new TaskListItem(task, lastItem, null);
@@ -54,10 +57,11 @@ public class LinkedTaskList {
 
     /**
      * Method for remove task from task list
-     * @param task - task for removing from list
+     * @param task task for removing from list
      * @return return: - true, when task was exist in list,
      *                 - false, when task was not exist in list
      */
+    @Override
     public boolean remove(Task task) {
         TaskListItem temp = headItem;
         for (int i = 0; i < size; i++){
@@ -86,6 +90,7 @@ public class LinkedTaskList {
      * Method for getting amount of task in task list
      * @return return amount of task in task list
      */
+    @Override
     public int size() {
         return size;
     }
@@ -95,33 +100,58 @@ public class LinkedTaskList {
      * @return return task from task list
      * @throws IndexOutOfBoundsException if index is out of range for the list
      */
+    @Override
     public Task getTask(int index) throws IndexOutOfBoundsException {
         if(index < 0 || index >= size) throw new IndexOutOfBoundsException("Index is out of range for the list");
         TaskListItem temp = headItem;
-        for (int i = 0; i < size; i++){
-            if(i == index) {
-                break;
+        if(index < size/2){
+            for (int i = 0; i < size; i++){
+                if(i == index) {
+                    break;
+                }
+                temp = temp.next;
             }
-            temp = temp.next;
+        } else {
+            temp = lastItem;
+            for (int i = size - 1; i >= 0; i--) {
+                if (i == index) {
+                    break;
+                }
+                temp = temp.prev;
+            }
         }
         return temp.task;
     }
 
-    /**
-     * Method for getting a subset of tasks that are scheduled to run at least once after time "from" and no later than "to"
-     * @param from - start time to find subset of tasks
-     * @param to - end time to find subset of tasks
-     * @return return subset of tasks that are corresponding to conditions
-     */
-    public LinkedTaskList incoming(int from, int to) {
-        LinkedTaskList list = new LinkedTaskList();
-        TaskListItem temp = headItem;
-        for (int i = 0; i < size; i++) {
-            if(temp.task != null && temp.task.getStartTime() > from && temp.task.nextTimeAfter(from) != -1 && temp.task.getEndTime() <= to) {
-                list.add(temp.task);
+    @Override
+    public AbstractTaskList getExtensionInstance() {
+        return new LinkedTaskList();
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+            TaskListItem iteratorTemp = new TaskListItem(null, null, headItem);
+            @Override
+            public boolean hasNext() {
+                return iteratorTemp.next != null;
             }
-            temp = temp.next;
+
+            @Override
+            public Task next() {
+                iteratorTemp = iteratorTemp.next;
+                return iteratorTemp.task;
+            }
+        };
+    }
+
+    @Override
+    public String toString() {
+        Iterator<Task> taskIterator = this.iterator();
+        String string = "LinkedTaskList{";
+        while (taskIterator.hasNext()) {
+            string = string + taskIterator.next().toString() + ", ";
         }
-        return list;
+        return string + "size=" + size + '}';
     }
 }
