@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
+import java.util.Iterator;
+
 /**
  * ArrayTaskList - task list, based on an array and designed to store user tasks.
  * List has the following functions:
@@ -10,16 +12,17 @@ package ua.edu.sumdu.j2se.Pavlenko.tasks;
  *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
-public class ArrayTaskList {
+public class ArrayTaskList extends AbstractTaskList {
     private Task[] taskList = new Task[10];
     private int size;
     private static final double MULTIPLIER = 1.4;
 
     /**
      * Method for adding new task to task list
-     * @param task - task for adding to list
+     * @param task task for adding to list
      * @throws IllegalArgumentException if task is null
      */
+    @Override
     public void add(Task task) throws IllegalArgumentException {
         if(task == null) throw new IllegalArgumentException("Task should not be a null");
         if (size > taskList.length) {
@@ -37,10 +40,11 @@ public class ArrayTaskList {
 
     /**
      * Method for remove task from task list
-     * @param task - task for removing from list
+     * @param task task for removing from list
      * @return return: - true, when task was exist in list,
      *                 - false, when task was not exist in list
      */
+    @Override
     public boolean remove(Task task) {
         int taskPos = indexOf(task);
         if(isTaskPresent(task)){
@@ -75,6 +79,7 @@ public class ArrayTaskList {
      * Method for getting amount of task in task list
      * @return return amount of task in task list
      */
+    @Override
     public int size() {
         return size;
     }
@@ -84,24 +89,41 @@ public class ArrayTaskList {
      * @return return task from task list
      * @throws IndexOutOfBoundsException if index is out of range for the list
      */
-    public Task getTask(int index) throws IndexOutOfBoundsException{
+    @Override
+    public Task getTask(int index) throws IndexOutOfBoundsException {
         if(index < 0 || index >= size) throw new IndexOutOfBoundsException("Index is out of range for the list");
         return taskList[index];
     }
 
-    /**
-     * Method for getting a subset of tasks that are scheduled to run at least once after time "from" and no later than "to"
-     * @param from - start time to find subset of tasks
-     * @param to - end time to find subset of tasks
-     * @return return subset of tasks that are corresponding to conditions
-     */
-    public ArrayTaskList incoming(int from, int to) {
-        ArrayTaskList list = new ArrayTaskList();
-        for (Task task : taskList) {
-            if(task != null && task.getStartTime() > from && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to) {
-                list.add(task);
+    @Override
+    public AbstractTaskList getExtensionInstance() {
+        return new ArrayTaskList();
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+            private int iteratorIndex = 0;
+
+            @Override
+            public boolean hasNext() {
+                return iteratorIndex < size;
             }
+
+            @Override
+            public Task next() {
+                return taskList[iteratorIndex++];
+            }
+        };
+    }
+
+    @Override
+    public String toString() {
+        Iterator<Task> taskIterator = this.iterator();
+        String string = "ArrayTaskList{";
+        while (taskIterator.hasNext()) {
+            string = string + taskIterator.next().toString() + ", ";
         }
-        return list;
+        return string + "size=" + size + '}';
     }
 }
