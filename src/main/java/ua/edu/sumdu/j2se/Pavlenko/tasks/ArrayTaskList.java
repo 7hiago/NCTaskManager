@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
+import java.util.Arrays;
 import java.util.Iterator;
 
 /**
@@ -12,7 +13,7 @@ import java.util.Iterator;
  *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
-public class ArrayTaskList extends AbstractTaskList {
+public class ArrayTaskList extends AbstractTaskList implements Cloneable{
     private Task[] taskList = new Task[10];
     private int size;
     private static final double MULTIPLIER = 1.4;
@@ -96,8 +97,8 @@ public class ArrayTaskList extends AbstractTaskList {
     }
 
     @Override
-    public AbstractTaskList getExtensionInstance() {
-        return new ArrayTaskList();
+    public ListTypes.types getClassType() {
+        return ListTypes.types.ARRAY;
     }
 
     @Override
@@ -114,16 +115,48 @@ public class ArrayTaskList extends AbstractTaskList {
             public Task next() {
                 return taskList[iteratorIndex++];
             }
+
+            @Override
+            public void remove() {
+                if(iteratorIndex == 0 ) throw new IllegalStateException();
+                ArrayTaskList.this.remove(taskList[--iteratorIndex]);
+            }
         };
     }
 
     @Override
     public String toString() {
         Iterator<Task> taskIterator = this.iterator();
-        String string = "ArrayTaskList{";
+        StringBuilder string = new StringBuilder("ArrayTaskList{");
         while (taskIterator.hasNext()) {
-            string = string + taskIterator.next().toString() + ", ";
+            string.append(taskIterator.next().toString()).append(", ");
         }
-        return string + "size=" + size + '}';
+        return string.append("size=").append(size).append('}').toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ArrayTaskList that = (ArrayTaskList) o;
+        return Arrays.equals(taskList, that.taskList);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(taskList);
+    }
+
+    @Override
+    public ArrayTaskList clone() {
+        try {
+            ArrayTaskList newList = (ArrayTaskList) super.clone();
+            newList.taskList = taskList.clone();
+            return newList;
+        }
+        catch (CloneNotSupportedException e)
+        {
+            throw new AssertionError();
+        }
     }
 }

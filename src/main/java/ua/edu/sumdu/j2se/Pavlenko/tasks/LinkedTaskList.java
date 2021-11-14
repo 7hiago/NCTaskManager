@@ -1,6 +1,8 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
+import java.util.Objects;
 
 /**
  * LinkedTaskList - task list, based on doubly linked list and designed to store user tasks.
@@ -12,7 +14,7 @@ import java.util.Iterator;
  *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
-public class LinkedTaskList extends AbstractTaskList{
+public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
     private class TaskListItem {
         private Task task;
@@ -124,8 +126,8 @@ public class LinkedTaskList extends AbstractTaskList{
     }
 
     @Override
-    public AbstractTaskList getExtensionInstance() {
-        return new LinkedTaskList();
+    public ListTypes.types getClassType() {
+        return ListTypes.types.LINKED;
     }
 
     @Override
@@ -142,16 +144,49 @@ public class LinkedTaskList extends AbstractTaskList{
                 iteratorTemp = iteratorTemp.next;
                 return iteratorTemp.task;
             }
+
+            @Override
+            public void remove() {
+                if(iteratorTemp.task == null) throw new IllegalStateException(); //NoSuchElementException
+                LinkedTaskList.this.remove(iteratorTemp.task);
+            }
         };
     }
 
     @Override
     public String toString() {
         Iterator<Task> taskIterator = this.iterator();
-        String string = "LinkedTaskList{";
+        StringBuilder string = new StringBuilder("LinkedTaskList{");
         while (taskIterator.hasNext()) {
-            string = string + taskIterator.next().toString() + ", ";
+            string.append(taskIterator.next().toString()).append(", ");
         }
-        return string + "size=" + size + '}';
+        return string.append("size=").append(size).append('}').toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Iterator<Task> taskIterator = this.iterator();
+        LinkedTaskList that = (LinkedTaskList) o;
+        while (taskIterator.hasNext()) {
+            if(!taskIterator.next().equals(that.iterator().next())) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(headItem.task);
+    }
+
+    @Override
+    public LinkedTaskList clone() {
+        try {
+            return (LinkedTaskList) super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }

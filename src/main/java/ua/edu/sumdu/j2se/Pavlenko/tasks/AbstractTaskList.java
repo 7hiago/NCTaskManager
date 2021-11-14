@@ -12,7 +12,7 @@ import java.util.Iterator;
  *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
-abstract class AbstractTaskList {
+abstract class AbstractTaskList implements Iterable<Task> {
 
     /**
      * Method for adding new task to task list
@@ -41,10 +41,10 @@ abstract class AbstractTaskList {
     public abstract Task getTask(int index);
 
     /**
-     * Method for getting extension instance for abstract class
-     * @return return instance of extension
+     * Method for getting inherit class type for abstract class
+     * @return return inherit class type
      */
-    public abstract AbstractTaskList getExtensionInstance();
+    public abstract ListTypes.types getClassType();
 
     /**
      * Method for iterating list
@@ -59,11 +59,9 @@ abstract class AbstractTaskList {
      * @return return subset of tasks that are corresponding to conditions
      */
     public AbstractTaskList incoming (int from, int to) {
-        AbstractTaskList list = getExtensionInstance();
-        Iterator<Task> taskIterator = this.iterator();
-        while (taskIterator.hasNext()){
-            Task task = taskIterator.next();
-            if(task != null && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to) {
+        AbstractTaskList list = TaskListFactory.createTaskList(getClassType());
+        for (Task task : this) {
+            if (task != null && list != null && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to) {
                 list.add(task);
             }
         }

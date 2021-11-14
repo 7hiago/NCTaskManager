@@ -14,7 +14,7 @@ import java.util.Objects;
  *  - return next moment of the task execution.
  * @author Yevhenii Pavlenko
  */
-public class Task {
+public class Task implements Cloneable{
     private String title;
     private boolean isActive;
     private int time;
@@ -208,5 +208,15 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hash(getTitle(), isActive(), getTime(), getStartTime(), getEndTime(), intervalTime);
+    }
+
+    @Override
+    public Task clone() {
+        try {
+            return (Task) super.clone();
+        }
+        catch (CloneNotSupportedException e) {
+            throw new AssertionError();
+        }
     }
 }
