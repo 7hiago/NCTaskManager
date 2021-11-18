@@ -1,8 +1,11 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 import java.util.Objects;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * LinkedTaskList - task list, based on doubly linked list and designed to store user tasks.
@@ -151,6 +154,16 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
                 LinkedTaskList.this.remove(iteratorTemp.task);
             }
         };
+    }
+
+    @Override
+    public Stream<Task> getStream() {
+        Iterator<Task> taskIterator = this.iterator();
+        return StreamSupport.stream(
+                Spliterators.spliteratorUnknownSize(
+                        taskIterator,
+                        Spliterator.ORDERED)
+                , false);
     }
 
     @Override
