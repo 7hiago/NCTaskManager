@@ -1,6 +1,7 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 /**
  * AbstractTaskList - abstract task list is a template for different realization of lists designed to store user tasks.
@@ -12,7 +13,7 @@ import java.util.Iterator;
  *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
-abstract class AbstractTaskList implements Iterable<Task> {
+public abstract class AbstractTaskList implements Iterable<Task> {
 
     /**
      * Method for adding new task to task list
@@ -58,13 +59,15 @@ abstract class AbstractTaskList implements Iterable<Task> {
      * @param to end time to find subset of tasks
      * @return return subset of tasks that are corresponding to conditions
      */
-    public AbstractTaskList incoming (int from, int to) {
+    public final AbstractTaskList incoming (int from, int to) {
         AbstractTaskList list = TaskListFactory.createTaskList(getClassType());
-        for (Task task : this) {
-            if (task != null && list != null && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to) {
-                list.add(task);
-            }
-        }
+        this.getStream().filter(task -> task != null && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to).forEach(list::add);
         return list;
     }
+
+    /**
+     * Method for getting a sequence of elements supporting sequential and parallel aggregate operations with collections
+     * @return return stream of task
+     */
+    public abstract Stream<Task> getStream();
 }

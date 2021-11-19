@@ -2,6 +2,7 @@ package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
 import java.util.Arrays;
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 /**
  * ArrayTaskList - task list, based on an array and designed to store user tasks.
@@ -65,7 +66,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
 
     private int indexOf(Task task) {
         for (int i = 0; i < taskList.length; i++) {
-            if (taskList[i].equals(task)) {
+            if (taskList[i] != null && taskList[i].equals(task)) {
                 return i;
             }
         }
@@ -125,6 +126,11 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
     }
 
     @Override
+    public Stream<Task> getStream() {
+        return Arrays.stream(taskList);
+    }
+
+    @Override
     public String toString() {
         Iterator<Task> taskIterator = this.iterator();
         StringBuilder string = new StringBuilder("ArrayTaskList{");
@@ -159,4 +165,6 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
             throw new AssertionError();
         }
     }
+
+
 }
