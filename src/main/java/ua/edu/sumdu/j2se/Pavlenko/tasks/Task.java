@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.Pavlenko.tasks;
 
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 /**
@@ -17,20 +18,19 @@ import java.util.Objects;
 public class Task implements Cloneable{
     private String title;
     private boolean isActive;
-    private int time;
-    private int startTime;
-    private int endTime;
+    private LocalDateTime time;
+    private LocalDateTime startTime;
+    private LocalDateTime endTime;
     private int intervalTime;
-
     /**
      * Constructor - create new not active and not repeated task
      * @param title task name (description)
      * @param time execution time of this task
-     * @see #Task(String, int, int, int)
+     * @see #Task(String, LocalDateTime, LocalDateTime, int)
      * @throws IllegalArgumentException if time is negative
      */
-    public Task(String title, int time) throws IllegalArgumentException {
-        if(time < 0) throw new IllegalArgumentException("Timestamps should not be negative");
+    public Task(String title, LocalDateTime time) throws IllegalArgumentException {
+        if(time == null) throw new IllegalArgumentException("Timestamps should not be negative");
         setTitle(title);
         setTime(time);
         setActive(false);
@@ -42,11 +42,11 @@ public class Task implements Cloneable{
      * @param start start execution time of this task
      * @param end end execution time of this task
      * @param interval time interval at which the task repeats execution
-     * @see #Task(String, int)
+     * @see #Task(String, LocalDateTime)
      * @throws IllegalArgumentException if start time or end time or interval time is negative
      */
-    public Task (String title, int start, int end, int interval) throws IllegalArgumentException {
-        if(start < 0 || end < 0) throw new IllegalArgumentException("Timestamps should not be negative");
+    public Task (String title, LocalDateTime start, LocalDateTime end, int interval) throws IllegalArgumentException {
+        if(start == null || end == null) throw new IllegalArgumentException("Timestamps should not be negative");
         if(interval < 0) throw new IllegalArgumentException("Task repetition interval must be greater than zero");
         setTitle(title);
         setTime(start, end, interval);
@@ -90,7 +90,7 @@ public class Task implements Cloneable{
      * @return return execution time of this task when it is not repeated,
      *         or start execution time of this task when it is repeated
      */
-    public int getTime() {
+    public LocalDateTime getTime() {
         if(isRepeated()) return getStartTime();
         return time;
     }
@@ -99,9 +99,9 @@ public class Task implements Cloneable{
      * Method for setting/changing execution time of this task when it is not repeated,
      * and setting it not repeated when task is repeated
      * @param time execution time of this task
-     * @see #setTime(int, int, int) 
+     * @see #setTime(LocalDateTime, LocalDateTime, int)
      */
-    public void setTime(int time) {
+    public void setTime(LocalDateTime time) {
         intervalTime = 0;
         this.time = time;
     }
@@ -111,7 +111,7 @@ public class Task implements Cloneable{
      * @return return start execution time of this task when it is repeated,
      *         or execution time of this task when it is not repeated
      */
-    public int getStartTime() {
+    public LocalDateTime getStartTime() {
         if(!isRepeated()) return getTime();
         return startTime;
     }
@@ -121,7 +121,7 @@ public class Task implements Cloneable{
      * @return return end execution time of this task when it is repeated,
      *         or execution time of this task when it is not repeated
      */
-    public int getEndTime() {
+    public LocalDateTime getEndTime() {
         if(!isRepeated()) return getTime();
         return endTime;
     }
@@ -142,9 +142,9 @@ public class Task implements Cloneable{
      * @param start start execution time of this task
      * @param end end execution time of this task
      * @param interval time interval at which the task repeats execution
-     * @see #setTime(int)
+     * @see #setTime(LocalDateTime)
      */
-    public void setTime (int start, int end, int interval) {
+    public void setTime (LocalDateTime start, LocalDateTime end, int interval) {
         this.startTime = start;
         this.endTime = end;
         this.intervalTime = interval;
@@ -166,21 +166,21 @@ public class Task implements Cloneable{
      *                   - current is bigger then execution time of this task when it is not repeated;
      *                   - current is bigger then end execution time of this task when task is repeated.
      */
-    public int nextTimeAfter(int current) {
-        if(!isActive()) return -1;
+    public LocalDateTime nextTimeAfter(LocalDateTime current) {
+        if(!isActive()) return null;
         if(!isRepeated()){
-            if(current < getStartTime()) return getStartTime();
+            if(current.isBefore(getStartTime())) return getStartTime();
         }
         if(isRepeated()) {
-            if (current < getEndTime()) {
-                int temp = getStartTime();
-                do {
-                    if (temp <= current) temp += getRepeatInterval();
-                } while (temp <= current);
-                if (temp < getEndTime()) return temp;
+            if (current.isBefore(getEndTime())) {
+                LocalDateTime temp = getStartTime();
+                while (temp.isBefore(current) || temp.isEqual(current)) {
+                    temp = temp.plusSeconds(getRepeatInterval());
+                }
+                if (!temp.isAfter(getEndTime())) return temp;
             }
         }
-        return -1;
+        return null;
     }
 
     @Override
