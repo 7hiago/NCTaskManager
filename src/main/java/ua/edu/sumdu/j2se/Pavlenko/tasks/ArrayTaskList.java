@@ -14,7 +14,7 @@ import java.util.stream.Stream;
  *  - return subset of tasks for a certain interval.
  * @author Yevhenii Pavlenko
  */
-public class ArrayTaskList extends AbstractTaskList implements Cloneable{
+public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     private Task[] taskList = new Task[10];
     private int size;
     private static final double MULTIPLIER = 1.4;
@@ -95,11 +95,6 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable{
     public Task getTask(int index) throws IndexOutOfBoundsException {
         if(index < 0 || index >= size) throw new IndexOutOfBoundsException("Index is out of range for the list");
         return taskList[index];
-    }
-
-    @Override
-    public ListTypes.types getClassType() {
-        return ListTypes.types.ARRAY;
     }
 
     @Override

@@ -42,28 +42,10 @@ public abstract class AbstractTaskList implements Iterable<Task> {
     public abstract Task getTask(int index);
 
     /**
-     * Method for getting inherit class type for abstract class
-     * @return return inherit class type
-     */
-    public abstract ListTypes.types getClassType();
-
-    /**
      * Method for iterating list
      * @return return next item from list if it has next item
      */
     public abstract Iterator<Task> iterator();
-
-    /**
-     * Method for getting a subset of tasks that are scheduled to run at least once after time "from" and no later than "to"
-     * @param from start time to find subset of tasks
-     * @param to end time to find subset of tasks
-     * @return return subset of tasks that are corresponding to conditions
-     */
-    public final AbstractTaskList incoming (int from, int to) {
-        AbstractTaskList list = TaskListFactory.createTaskList(getClassType());
-        this.getStream().filter(task -> task != null && task.nextTimeAfter(from) != -1 && task.getEndTime() <= to).forEach(list::add);
-        return list;
-    }
 
     /**
      * Method for getting a sequence of elements supporting sequential and parallel aggregate operations with collections

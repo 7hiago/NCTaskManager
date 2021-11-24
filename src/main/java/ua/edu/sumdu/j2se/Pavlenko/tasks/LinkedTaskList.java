@@ -129,11 +129,6 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
     }
 
     @Override
-    public ListTypes.types getClassType() {
-        return ListTypes.types.LINKED;
-    }
-
-    @Override
     public Iterator<Task> iterator() {
         return new Iterator<Task>() {
             TaskListItem iteratorTemp = new TaskListItem(null, null, headItem);
