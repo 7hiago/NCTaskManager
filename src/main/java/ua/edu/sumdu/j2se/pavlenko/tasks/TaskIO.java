@@ -97,7 +97,7 @@ public class TaskIO {
     }
 
     public static  void read(AbstractTaskList tasks, Reader in) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();;
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (BufferedReader reader = new BufferedReader(in)) {
             String line;
             StringBuilder string = new StringBuilder();
