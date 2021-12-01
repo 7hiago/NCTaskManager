@@ -1,5 +1,6 @@
-package ua.edu.sumdu.j2se.Pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks;
 
+import java.io.Serializable;
 import java.util.Iterator;
 import java.util.stream.Stream;
 
@@ -11,9 +12,9 @@ import java.util.stream.Stream;
  *  - return size of tasks list;
  *  - return single task from list;
  *  - return subset of tasks for a certain interval.
- * @author Yevhenii Pavlenko
+ * @author Yevhenii pavlenko
  */
-public abstract class AbstractTaskList implements Iterable<Task> {
+public abstract class AbstractTaskList implements Iterable<Task>, Serializable {
 
     /**
      * Method for adding new task to task list
