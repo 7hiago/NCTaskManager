@@ -1,5 +1,6 @@
-package ua.edu.sumdu.j2se.Pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -13,9 +14,9 @@ import java.util.Objects;
  *  - return interval of repeat;
  *  - return is repeated or not;
  *  - return next moment of the task execution.
- * @author Yevhenii Pavlenko
+ * @author Yevhenii pavlenko
  */
-public class Task implements Cloneable{
+public class Task implements Cloneable, Serializable {
     private String title;
     private boolean isActive;
     private LocalDateTime time;

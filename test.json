@@ -1,0 +1,100 @@
+[
+  {
+    "title": "A",
+    "isActive": false,
+    "time": {
+      "date": {
+        "year": 2021,
+        "month": 12,
+        "day": 2
+      },
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 59019000
+      }
+    },
+    "intervalTime": 0
+  },
+  {
+    "title": "B",
+    "isActive": false,
+    "startTime": {
+      "date": {
+        "year": 2021,
+        "month": 12,
+        "day": 2
+      },
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 59019000
+      }
+    },
+    "endTime": {
+      "date": {
+        "year": 2021,
+        "month": 12,
+        "day": 3
+      },
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 59019000
+      }
+    },
+    "intervalTime": 3600
+  },
+  {
+    "title": "C",
+    "isActive": true,
+    "time": {
+      "date": {
+        "year": 2021,
+        "month": 12,
+        "day": 2
+      },
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 59019000
+      }
+    },
+    "intervalTime": 0
+  },
+  {
+    "title": "B",
+    "isActive": true,
+    "startTime": {
+      "date": {
+        "year": 2021,
+        "month": 12,
+        "day": 2
+      },
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 59019000
+      }
+    },
+    "endTime": {
+      "date": {
+        "year": 2021,
+        "month": 12,
+        "day": 3
+      },
+      "time": {
+        "hour": 0,
+        "minute": 0,
+        "second": 0,
+        "nano": 59019000
+      }
+    },
+    "intervalTime": 3600
+  }
+]

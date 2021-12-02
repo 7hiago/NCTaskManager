@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.Pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks;
 
 public class TaskListFactory {
     public static AbstractTaskList createTaskList(ListTypes.types type) {

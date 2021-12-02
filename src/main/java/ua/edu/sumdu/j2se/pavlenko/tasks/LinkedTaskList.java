@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.Pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks;
 
 import java.util.Iterator;
 import java.util.Objects;
@@ -15,7 +15,7 @@ import java.util.stream.StreamSupport;
  *  - return size of tasks list;
  *  - return single task from list;
  *  - return subset of tasks for a certain interval.
- * @author Yevhenii Pavlenko
+ * @author Yevhenii pavlenko
  */
 public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
