@@ -22,7 +22,7 @@ import com.google.gson.reflect.TypeToken;
 
 public class TaskIO {
 
-    public static void write(AbstractTaskList tasks, OutputStream out) throws IOException {
+    public static void write(AbstractTaskList tasks, OutputStream out) {
         try(ObjectOutputStream oos = new ObjectOutputStream(out))
         {
             oos.writeInt(tasks.size());
@@ -40,11 +40,11 @@ public class TaskIO {
             }
         }
         catch(IOException e){
-            throw new IOException(e);
+            e.printStackTrace();
         }
     }
 
-    public static void read(AbstractTaskList tasks, InputStream in) throws IOException {
+    public static void read(AbstractTaskList tasks, InputStream in) {
         try(ObjectInputStream ois = new ObjectInputStream(in))
         {
             int size = ois.readInt();
@@ -69,7 +69,7 @@ public class TaskIO {
             }
         }
         catch(IOException e){
-            throw new IOException(e);
+            e.printStackTrace();
         }
     }
 
@@ -81,8 +81,8 @@ public class TaskIO {
         TaskIO.read(tasks, new FileInputStream(file));
     }
 
-    public static void write(AbstractTaskList tasks, Writer out) throws IOException {
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    public static void write(AbstractTaskList tasks, Writer out) {
+        Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
         Task[] taskList = new Task[tasks.size()];
         int i = 0;
         for (Task task : tasks) {
@@ -92,11 +92,11 @@ public class TaskIO {
             writer.write(gson.toJson(taskList));
         }
         catch(IOException e){
-            throw new IOException(e);
+            e.printStackTrace();
         }
     }
 
-    public static  void read(AbstractTaskList tasks, Reader in) throws IOException {
+    public static  void read(AbstractTaskList tasks, Reader in) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (BufferedReader reader = new BufferedReader(in)) {
             String line;
@@ -110,7 +110,7 @@ public class TaskIO {
             }
         }
         catch(IOException e){
-            throw new IOException(e);
+            e.printStackTrace();
        }
     }
 
