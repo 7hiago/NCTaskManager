@@ -82,7 +82,7 @@ public class TaskIO {
     }
 
     public static void write(AbstractTaskList tasks, Writer out) {
-        Gson gson = new GsonBuilder().setPrettyPrinting().setLenient().create();
+        Gson gson = new GsonBuilder().setPrettyPrinting().create();
         Task[] taskList = new Task[tasks.size()];
         int i = 0;
         for (Task task : tasks) {
