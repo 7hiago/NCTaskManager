@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -186,14 +186,12 @@ public class Task implements Cloneable, Serializable {
 
     @Override
     public String toString() {
-        return "Task{" +
-                "title='" + title + '\'' +
-                ", isActive=" + isActive +
-                ", time=" + time +
-                ", startTime=" + startTime +
-                ", endTime=" + endTime +
-                ", intervalTime=" + intervalTime +
-                '}';
+        return  "title='" + title + '\'' + ",\n" +
+                " isActive=" + isActive + ",\n" +
+                " time=" + time + ",\n" +
+                " startTime=" + startTime + ",\n" +
+                " endTime=" + endTime + ",\n" +
+                " intervalTime=" + intervalTime;
     }
 
     @Override

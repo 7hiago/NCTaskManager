@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks.model;
 
 import java.util.Arrays;
 import java.util.Iterator;

@@ -1,5 +1,9 @@
 package ua.edu.sumdu.j2se.pavlenko.tasks;
 
+import ua.edu.sumdu.j2se.pavlenko.tasks.controller.TaskManagerController;
+import ua.edu.sumdu.j2se.pavlenko.tasks.model.TaskManagerModel;
+import ua.edu.sumdu.j2se.pavlenko.tasks.view.TaskManagerView;
+
 public class Main {
 
 	public static void main(String[] args) {
@@ -60,5 +64,39 @@ public class Main {
 		for (Task task : nls){
 			System.out.println(task);
 		}*/
+		TaskManagerModel taskManagerModel = new TaskManagerModel();
+		TaskManagerView view = new TaskManagerView();
+		TaskManagerController taskManagerController = new TaskManagerController(view, taskManagerModel);
+
+		taskManagerController.start();
+
+		//2021-12-12T14:52:32
+
+		/*int selectedFunc = view.getSelectedOption(view.navigationPages(TaskManagerView.startPageContent));
+		if(selectedFunc == 1) {
+			selectedFunc = view.getSelectedOption(view.navigationPages(TaskManagerView.createTaskPageContent));
+			if(selectedFunc == 1) {
+				String title = view.getNewTitle();
+				LocalDateTime time = Adapter.timeAdapter(view.getNewStartTime());
+				Task newTask = new Task(title, time);
+				newTask.setActive(view.getNewActivation());
+				taskManagerModel.add(newTask);
+			} else {
+				String title = view.getNewTitle();
+				LocalDateTime startTime = Adapter.timeAdapter(view.getNewStartTime());
+				LocalDateTime endTime = Adapter.timeAdapter(view.getNewEndTime());
+				int interval = view.getNewInterval();
+				Task newTask = new Task(title, startTime, endTime, interval);
+				newTask.setActive(view.getNewActivation());
+				taskManagerModel.add(newTask);
+			}
+		}*/
+		//System.out.println(taskManagerModel);
+		//System.out.println("selectedFunc: " + selectedFunc);
+		//1
+		//LocalDateTime time = Adapter.timeAdapter("11.12.2021T10:12:13");
+		//2
+		//LocalDateTime time = Adapter.timeAdapter("2007-12-03T10:15:30");
+		//System.out.println(time);
 	}
 }

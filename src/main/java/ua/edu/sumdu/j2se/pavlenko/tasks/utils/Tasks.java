@@ -1,4 +1,6 @@
-package ua.edu.sumdu.j2se.pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks.utils;
+
+import ua.edu.sumdu.j2se.pavlenko.tasks.model.Task;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
@@ -26,7 +28,7 @@ public class Tasks {
         SortedMap<LocalDateTime, Set<Task>> mapList = new TreeMap<>();
 
         for(Task task : Tasks.incoming(tasks, start, end)) {
-            for(LocalDateTime date = task.nextTimeAfter(start);  date.compareTo(end) <= 0; date = task.nextTimeAfter(date)) {
+            for(LocalDateTime date = task.nextTimeAfter(start);  date != null && date.compareTo(end) <= 0; date = task.nextTimeAfter(date)) {
                 if (mapList.get(date) != null) {
                     mapList.get(date).add(task);
                 } else {

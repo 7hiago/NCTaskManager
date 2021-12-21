@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.pavlenko.tasks;
+package ua.edu.sumdu.j2se.pavlenko.tasks.utils;
 
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -19,6 +19,8 @@ import java.io.FileReader;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import ua.edu.sumdu.j2se.pavlenko.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.pavlenko.tasks.model.Task;
 
 public class TaskIO {
 
