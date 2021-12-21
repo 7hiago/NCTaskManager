@@ -51,6 +51,10 @@ public class TaskManagerView {
         return validationInput(readUserInput(), list.length);
     }
 
+    public void showNotification(String notification) {
+        System.out.println(notification);
+    }
+
     public String readUserInput() {
         Scanner in = new Scanner(System.in);
         return in.nextLine();

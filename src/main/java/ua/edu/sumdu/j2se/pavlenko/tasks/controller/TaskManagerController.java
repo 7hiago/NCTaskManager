@@ -11,7 +11,6 @@ public class TaskManagerController {
     public TaskManagerController(TaskManagerView taskManagerView, TaskManagerModel taskManagerModel) {
         this.taskManagerView = taskManagerView;
         this.taskManagerModel = taskManagerModel;
-
     }
 
     public void start() {
@@ -53,7 +52,9 @@ public class TaskManagerController {
         System.exit(0);
     }
 
-    public void notification() {}
+    public void notification() {
+
+    }
 
     public boolean createTaskHandler() {
         switch (taskManagerView.showCreateTaskPage()) {

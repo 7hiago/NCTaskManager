@@ -7,6 +7,7 @@ import ua.edu.sumdu.j2se.pavlenko.tasks.utils.Tasks;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedMap;
@@ -84,8 +85,11 @@ public class TaskManagerModel {
         int i = 0;
         for (Map.Entry<LocalDateTime, Set<Task>> taskListItem : calendarList.entrySet()) {
             StringBuilder item = new StringBuilder();
-            Task task = (Task) taskListItem.getValue();
-            item.append(taskListItem.getKey().toLocalDate()).append(" - ").append(task.getTitle());
+            item.append(taskListItem.getKey()).append(": "); // .toLocalDate() 5.toLocalTime()
+            HashSet<Task> set = (HashSet<Task>) taskListItem.getValue();
+            for(Task task : set) {
+                item.append(task.getTitle()).append(", ");
+            }
             list[i++] = item.toString();
         }
         return list;
@@ -97,5 +101,19 @@ public class TaskManagerModel {
 
     public void saveDataToFile() throws IOException {
         TaskIO.writeBinary(taskList, new File("add/taskList.txt"));
+    }
+
+    public String getStartTask() {
+        LocalDateTime timeNow = LocalDateTime.now();
+        SortedMap<LocalDateTime, Set<Task>> calendar = Tasks.calendar(taskList, timeNow.minusSeconds(1), timeNow);
+        StringBuilder item = new StringBuilder();
+        if(calendar.firstKey() == timeNow) {
+            item.append("Start ");
+            HashSet<Task> set = (HashSet<Task>) calendar.get(calendar.firstKey());
+            for (Task task : set) {
+                item.append(task.getTitle()).append(", ");
+            }
+        }
+        return item.toString();
     }
 }
