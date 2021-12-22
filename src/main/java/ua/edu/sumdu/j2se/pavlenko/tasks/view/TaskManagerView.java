@@ -4,6 +4,8 @@ import java.util.Scanner;
 
 public class TaskManagerView {
 
+    private Scanner in = new Scanner(System.in);
+
     private static final String[] startPageContent = new String[]{"Create new task", "Change task",
             "Remove task", "View information about available tasks", "View calendar of scheduled tasks", "Quite"};
     private static final String[] createTaskPageContent = new String[]{"Create new not repeated task",
@@ -56,7 +58,6 @@ public class TaskManagerView {
     }
 
     public String readUserInput() {
-        Scanner in = new Scanner(System.in);
         return in.nextLine();
     }
 

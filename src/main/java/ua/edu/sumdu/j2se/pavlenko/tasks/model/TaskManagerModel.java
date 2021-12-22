@@ -104,14 +104,16 @@ public class TaskManagerModel {
     }
 
     public String getStartTask() {
-        LocalDateTime timeNow = LocalDateTime.now();
+        LocalDateTime timeNow = LocalDateTime.now().withNano(0);
         SortedMap<LocalDateTime, Set<Task>> calendar = Tasks.calendar(taskList, timeNow.minusSeconds(1), timeNow);
         StringBuilder item = new StringBuilder();
-        if(calendar.firstKey() == timeNow) {
-            item.append("Start ");
-            HashSet<Task> set = (HashSet<Task>) calendar.get(calendar.firstKey());
-            for (Task task : set) {
-                item.append(task.getTitle()).append(", ");
+        if(calendar.size() != 0) {
+            if (calendar.firstKey().isEqual(timeNow)) {
+                item.append("Start ");
+                HashSet<Task> set = (HashSet<Task>) calendar.get(calendar.firstKey());
+                for (Task task : set) {
+                    item.append(task.getTitle()).append(", ");
+                }
             }
         }
         return item.toString();

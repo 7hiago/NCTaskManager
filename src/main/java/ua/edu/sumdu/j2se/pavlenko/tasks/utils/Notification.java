@@ -15,13 +15,16 @@ public class Notification extends Thread{
 
     @Override
     public void run() {
-        try {
-            sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        if(taskManagerModel.getStartTask().length() > 0){
-            taskManagerView.showNotification(taskManagerModel.getStartTask());
+        while (true) {
+            try {
+                sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            String result = taskManagerModel.getStartTask();
+            if(result.length() > 0){
+                taskManagerView.showNotification(result);
+            }
         }
     }
 

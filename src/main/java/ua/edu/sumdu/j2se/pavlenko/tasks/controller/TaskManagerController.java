@@ -1,16 +1,19 @@
 package ua.edu.sumdu.j2se.pavlenko.tasks.controller;
 
 import ua.edu.sumdu.j2se.pavlenko.tasks.model.TaskManagerModel;
+import ua.edu.sumdu.j2se.pavlenko.tasks.utils.Notification;
 import ua.edu.sumdu.j2se.pavlenko.tasks.view.TaskManagerView;
 
 public class TaskManagerController {
 
     private TaskManagerView taskManagerView;
     private TaskManagerModel taskManagerModel;
+    private Notification notification;
 
     public TaskManagerController(TaskManagerView taskManagerView, TaskManagerModel taskManagerModel) {
         this.taskManagerView = taskManagerView;
         this.taskManagerModel = taskManagerModel;
+        notification = new Notification(taskManagerView, taskManagerModel);
     }
 
     public void start() {
@@ -19,7 +22,10 @@ public class TaskManagerController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        for( ; ; ) {
+
+        initializeNotification();
+
+        while (true) {
             switch (taskManagerView.showStartPage()) {
                 case 1:
                     if(!createTaskHandler()) continue;
@@ -52,8 +58,9 @@ public class TaskManagerController {
         System.exit(0);
     }
 
-    public void notification() {
-
+    public void initializeNotification() {
+        notification.setDaemon(true);
+        notification.start();
     }
 
     public boolean createTaskHandler() {

@@ -12,7 +12,7 @@
         "hour": 0,
         "minute": 0,
         "second": 0,
-        "nano": 59019000
+        "nano": 432843000
       }
     },
     "intervalTime": 0
@@ -30,7 +30,7 @@
         "hour": 0,
         "minute": 0,
         "second": 0,
-        "nano": 59019000
+        "nano": 432843000
       }
     },
     "endTime": {
@@ -43,7 +43,7 @@
         "hour": 0,
         "minute": 0,
         "second": 0,
-        "nano": 59019000
+        "nano": 432843000
       }
     },
     "intervalTime": 3600
@@ -61,7 +61,7 @@
         "hour": 0,
         "minute": 0,
         "second": 0,
-        "nano": 59019000
+        "nano": 432843000
       }
     },
     "intervalTime": 0
@@ -79,7 +79,7 @@
         "hour": 0,
         "minute": 0,
         "second": 0,
-        "nano": 59019000
+        "nano": 432843000
       }
     },
     "endTime": {
@@ -92,7 +92,7 @@
         "hour": 0,
         "minute": 0,
         "second": 0,
-        "nano": 59019000
+        "nano": 432843000
       }
     },
     "intervalTime": 3600
