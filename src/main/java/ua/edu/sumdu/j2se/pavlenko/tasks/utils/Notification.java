@@ -21,7 +21,7 @@ public class Notification extends Thread{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            String result = taskManagerModel.getStartTask();
+            String result = taskManagerModel.getStartRunningTasks();
             if(result.length() > 0){
                 taskManagerView.showNotification(result);
             }

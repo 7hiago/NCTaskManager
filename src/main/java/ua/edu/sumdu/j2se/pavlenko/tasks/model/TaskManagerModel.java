@@ -96,14 +96,17 @@ public class TaskManagerModel {
     }
 
     public void loadDataFromFile() throws IOException {
-        TaskIO.readBinary(taskList, new File("add/taskList.txt"));
+        File file = new File("add/taskList.txt");
+        if(!file.createNewFile()) {
+            TaskIO.readBinary(taskList, new File("add/taskList.txt"));
+        }
     }
 
     public void saveDataToFile() throws IOException {
         TaskIO.writeBinary(taskList, new File("add/taskList.txt"));
     }
 
-    public String getStartTask() {
+    public String getStartRunningTasks() {
         LocalDateTime timeNow = LocalDateTime.now().withNano(0);
         SortedMap<LocalDateTime, Set<Task>> calendar = Tasks.calendar(taskList, timeNow.minusSeconds(1), timeNow);
         StringBuilder item = new StringBuilder();
