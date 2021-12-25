@@ -74,7 +74,6 @@ public class TaskManagerController {
             case 3: //back
                 return false;
             default:
-                System.out.println("Please, chose exist option!");
                 break;
         }
         return true;
@@ -82,6 +81,7 @@ public class TaskManagerController {
 
     public boolean changeTaskHandler() {
         int userChangeTask = taskManagerView.showActualTaskListPage(taskManagerModel.getActualTaskList());
+        if(userChangeTask == 0) return false;
         switch (taskManagerView.showChangeTaskPage()) {
             case 1:
                 taskManagerModel.changeTaskTitle(userChangeTask, taskManagerView.getTitle());
