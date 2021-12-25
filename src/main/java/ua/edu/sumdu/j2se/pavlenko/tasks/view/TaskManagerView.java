@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class TaskManagerView {
 
-    private Scanner in = new Scanner(System.in);
+    private Scanner input = new Scanner(System.in);
 
     private static final String[] startPageContent = new String[]{"Create new task", "Change task",
             "Remove task", "View information about available tasks", "View calendar of scheduled tasks", "Quite"};
@@ -16,19 +16,19 @@ public class TaskManagerView {
     public int showStartPage() {
         System.out.println("Select required option: ");
         writePageContent(startPageContent);
-        return validationInput(readUserInput(), startPageContent.length);
+        return validationInput(startPageContent.length);
     }
 
     public int showCreateTaskPage() {
         System.out.println("Select required option: ");
         writePageContent(createTaskPageContent);
-        return validationInput(readUserInput(), createTaskPageContent.length);
+        return validationInput(createTaskPageContent.length);
     }
 
     public int showChangeTaskPage() {
         System.out.println("Select required option: ");
         writePageContent(changeTaskPageContent);
-        return validationInput(readUserInput(), changeTaskPageContent.length);
+        return validationInput(changeTaskPageContent.length);
     }
 
     public int showActualTaskListPage(String[] list) {
@@ -39,7 +39,7 @@ public class TaskManagerView {
         } else {
             writePageContent(list);
         }
-        return validationInput(readUserInput(), list.length);
+        return validationInput(list.length);
     }
 
     public int showCalendarPage(String[] list) {
@@ -50,7 +50,7 @@ public class TaskManagerView {
         } else {
             writePageContent(list);
         }
-        return validationInput(readUserInput(), list.length);
+        return validationInput(list.length);
     }
 
     public void showNotification(String notification) {
@@ -58,7 +58,7 @@ public class TaskManagerView {
     }
 
     public String readUserInput() {
-        return in.nextLine();
+        return input.nextLine();
     }
 
     public String getTitle() {
@@ -92,10 +92,21 @@ public class TaskManagerView {
         }
     }
 
-    private int validationInput(String input, int range) throws IllegalArgumentException {
-        int userInput = Integer.parseInt(input);
-        if(userInput < 0 || userInput > range) {
-            throw new IllegalArgumentException("Value must be in range form 0 to " + range);
+    private int validationInput(int range) {
+        int userInput = -1;
+        boolean notValid = true;
+        while (notValid) {
+            try {
+                userInput = Integer.parseInt(readUserInput());
+            } catch (NumberFormatException e) {
+                System.out.println("Value must be a number\nPlease, enter correct symbols");
+                continue;
+            }
+            if(userInput < 0 || userInput > range) {
+                System.out.println("Value must be in range form 0 to " + range + "\nPlease, chose correct option!");
+            } else {
+                notValid = false;
+            }
         }
         return userInput;
     }
