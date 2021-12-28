@@ -80,24 +80,26 @@ public class TaskManagerController {
     public void changeTaskHandler() {
         logger.debug("invocation changeTaskHandler() method");
         int userChangeTask = taskManagerView.showActualTaskListPageToChange(taskManagerModel.getActualTaskList());
-        switch (taskManagerView.showChangeTaskPage()) {
-            case 1:
-                taskManagerModel.changeTaskTitle(userChangeTask, taskManagerView.getTitle());
-                break;
-            case 2:
-                taskManagerModel.changeTaskActivation(userChangeTask, taskManagerView.getActivation());
-                break;
-            case 3:
-                taskManagerModel.changeTaskStartTime(userChangeTask, taskManagerView.getStartTime());
-                break;
-            case 4:
-                taskManagerModel.changeTaskEndTime(userChangeTask, taskManagerView.getEndTime());
-                break;
-            case 5:
-                taskManagerModel.changeTaskInterval(userChangeTask, taskManagerView.getInterval());
-                break;
-            default:
-                break;
+        if(userChangeTask != 0) {
+            switch (taskManagerView.showChangeTaskPage()) {
+                case 1:
+                    taskManagerModel.changeTaskTitle(userChangeTask, taskManagerView.getTitle());
+                    break;
+                case 2:
+                    taskManagerModel.changeTaskActivation(userChangeTask, taskManagerView.getActivation());
+                    break;
+                case 3:
+                    taskManagerModel.changeTaskStartTime(userChangeTask, taskManagerView.getStartTime());
+                    break;
+                case 4:
+                    taskManagerModel.changeTaskEndTime(userChangeTask, taskManagerView.getEndTime());
+                    break;
+                case 5:
+                    taskManagerModel.changeTaskInterval(userChangeTask, taskManagerView.getInterval());
+                    break;
+                default:
+                    break;
+            }
         }
         taskManagerModel.saveDataToFile();
     }
