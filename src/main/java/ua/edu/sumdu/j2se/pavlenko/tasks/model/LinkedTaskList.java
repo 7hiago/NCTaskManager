@@ -72,16 +72,18 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
         for (int i = 0; i < size; i++){
             if(task.equals(temp.task)) {
                 if(temp.prev == null){
-                    headItem = temp.next;
-                    headItem.prev = null;
+                    this.headItem = temp.next;
                 }
-                else if (temp.next == null) {
-                    lastItem = temp.prev;
-                    lastItem.next = null;
+                else {
+                    temp.prev.next = temp.next;
+                    temp.prev = null;
+                }
+                if (temp.next == null) {
+                    this.lastItem = temp.prev;
                 }
                 else {
                     temp.next.prev = temp.prev;
-                    temp.prev.next = temp.next;
+                    temp.next = null;
                 }
                 size--;
                 return true;

@@ -1,11 +1,11 @@
 package ua.edu.sumdu.j2se.pavlenko.tasks.controller;
 
+import org.apache.log4j.Logger;
 import ua.edu.sumdu.j2se.pavlenko.tasks.model.TaskManagerModel;
-import ua.edu.sumdu.j2se.pavlenko.tasks.utils.Notification;
 import ua.edu.sumdu.j2se.pavlenko.tasks.view.TaskManagerView;
 
 public class TaskManagerController {
-
+    private static Logger logger = Logger.getLogger(TaskManagerController.class);
     private TaskManagerView taskManagerView;
     private TaskManagerModel taskManagerModel;
     private Notification notification;
@@ -17,53 +17,53 @@ public class TaskManagerController {
     }
 
     public void start() {
-        try {
-            taskManagerModel.loadDataFromFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        logger.debug("invocation start() method");
+        logger.info("Start executing TaskManager");
+        taskManagerModel.loadDataFromFile();
 
         initializeNotification();
 
         while (true) {
             switch (taskManagerView.showStartPage()) {
                 case 1:
-                    if(!createTaskHandler()) continue;
+                    createTaskHandler();
                     break;
                 case 2:
-                    if(!changeTaskHandler()) continue;
+                    changeTaskHandler();
                     break;
                 case 3:
-                    if(!removeTaskHandler()) continue;
+                    removeTaskHandler();
                     break;
                 case 4:
-                    if(!watchListHandler()) continue;
+                    watchListHandler();
                     break;
                 case 5:
-                    if(!watchCalendarHandler()) continue;
+                    watchCalendarHandler();
                     break;
                 case 6:
                     close();
+                    break;
+                default:
                     break;
             }
         }
     }
 
     public void close() {
-        try {
-            taskManagerModel.saveDataToFile();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        logger.debug("invocation close() method");
+        taskManagerModel.saveDataToFile();
+        logger.info("Stop executing TaskManager with status 0");
         System.exit(0);
     }
 
     public void initializeNotification() {
+        logger.debug("invocation initializeNotification() method");
         notification.setDaemon(true);
         notification.start();
     }
 
-    public boolean createTaskHandler() {
+    public void createTaskHandler() {
+        logger.debug("invocation createTaskHandler() method");
         switch (taskManagerView.showCreateTaskPage()) {
             case 1:
                 taskManagerModel.createNotRepeatedTask(taskManagerView.getTitle(), taskManagerView.getStartTime());
@@ -71,17 +71,15 @@ public class TaskManagerController {
             case 2:
                 taskManagerModel.createRepeatedTask(taskManagerView.getTitle(), taskManagerView.getStartTime(), taskManagerView.getEndTime(), taskManagerView.getInterval());
                 break;
-            case 3: //back
-                return false;
             default:
                 break;
         }
-        return true;
+        taskManagerModel.saveDataToFile();
     }
 
-    public boolean changeTaskHandler() {
-        int userChangeTask = taskManagerView.showActualTaskListPage(taskManagerModel.getActualTaskList());
-        if(userChangeTask == 0) return false;
+    public void changeTaskHandler() {
+        logger.debug("invocation changeTaskHandler() method");
+        int userChangeTask = taskManagerView.showActualTaskListPageToChange(taskManagerModel.getActualTaskList());
         switch (taskManagerView.showChangeTaskPage()) {
             case 1:
                 taskManagerModel.changeTaskTitle(userChangeTask, taskManagerView.getTitle());
@@ -98,30 +96,28 @@ public class TaskManagerController {
             case 5:
                 taskManagerModel.changeTaskInterval(userChangeTask, taskManagerView.getInterval());
                 break;
-            case 6: //back
-                return false;
             default:
                 break;
         }
-        return true;
+        taskManagerModel.saveDataToFile();
     }
 
-    public boolean removeTaskHandler() {
-        int userRemoveTask = taskManagerView.showActualTaskListPage(taskManagerModel.getActualTaskList());
-        if(userRemoveTask == 0) return false;
-        else if (userRemoveTask > 0) taskManagerModel.removeTask(userRemoveTask);
-        return true;
+    public void removeTaskHandler() {
+        logger.debug("invocation removeTaskHandler() method");
+        int userRemoveTask = taskManagerView.showActualTaskListPageToChange(taskManagerModel.getActualTaskList());
+        if(userRemoveTask > 0) taskManagerModel.removeTask(userRemoveTask);
+        taskManagerModel.saveDataToFile();
     }
 
-    public boolean watchListHandler() {
-        int userChoice = taskManagerView.showActualTaskListPage(taskManagerModel.getActualTaskList());
-        return userChoice != 0;
+    public void watchListHandler() {
+        logger.debug("invocation watchListHandler() method");
+        taskManagerView.showActualTaskListPage(taskManagerModel.getActualTaskList());
     }
 
-    public boolean watchCalendarHandler() {
+    public void watchCalendarHandler() {
+        logger.debug("invocation watchCalendarHandler() method");
         String[] userCalendar = taskManagerModel.getCalendar(taskManagerView.getStartTime(), taskManagerView.getEndTime());
-        int userChoice = taskManagerView.showCalendarPage(userCalendar);
-        return userChoice != 0;
+        taskManagerView.showCalendarPage(userCalendar);
     }
 
 }

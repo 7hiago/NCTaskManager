@@ -1,21 +1,9 @@
 package ua.edu.sumdu.j2se.pavlenko.tasks.utils;
 
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.InputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.Writer;
-import java.io.BufferedWriter;
-import java.io.Reader;
-import java.io.BufferedReader;
-import java.io.FileWriter;
-import java.io.FileReader;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -46,7 +34,7 @@ public class TaskIO {
         }
     }
 
-    public static void read(AbstractTaskList tasks, InputStream in) {
+    public static void read(AbstractTaskList tasks, InputStream in) throws EOFException {
         try(ObjectInputStream ois = new ObjectInputStream(in))
         {
             int size = ois.readInt();
@@ -69,6 +57,9 @@ public class TaskIO {
                 }
 
             }
+        }
+        catch(EOFException e){
+            throw new EOFException("Empty file");
         }
         catch(IOException e){
             e.printStackTrace();
