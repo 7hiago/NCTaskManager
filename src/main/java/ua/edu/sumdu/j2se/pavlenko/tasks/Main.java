@@ -5,8 +5,6 @@ import ua.edu.sumdu.j2se.pavlenko.tasks.controller.TaskManagerController;
 import ua.edu.sumdu.j2se.pavlenko.tasks.model.TaskManagerModel;
 import ua.edu.sumdu.j2se.pavlenko.tasks.view.TaskManagerView;
 
-
-
 public class Main {
 	private static Logger logger = Logger.getLogger(Main.class);
 
