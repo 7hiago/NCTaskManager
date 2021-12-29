@@ -102,7 +102,7 @@ public class TaskManagerView {
     public LocalDateTime getStartTime() {
         System.out.println("Enter start date follow next format: \"dd.MM.yyyy\":");
         LocalDate date = getDate();
-        System.out.println("Enter start time follow next format: \"HH.mm.ss\":");
+        System.out.println("Enter start time follow next format: \"HH.mm\":");
         LocalTime time = getTime(date);
         return LocalDateTime.of(date, time);
     }
@@ -110,7 +110,7 @@ public class TaskManagerView {
     public LocalDateTime getEndTime() {
         System.out.println("Enter end date follow next format: \"dd.MM.yyyy\":");
         LocalDate date = getDate();
-        System.out.println("Enter end time follow next format: \"HH.mm.ss\":");
+        System.out.println("Enter end time follow next format: \"HH.mm\":");
         LocalTime time = getTime(date);
         return LocalDateTime.of(date, time);
     }
@@ -183,9 +183,9 @@ public class TaskManagerView {
         while (notValid) {
             String userInput = readUserInput();
             try {
-                time = LocalTime.parse(userInput, DateTimeFormatter.ofPattern("HH.mm.ss"));
+                time = LocalTime.parse(userInput, DateTimeFormatter.ofPattern("HH.mm"));
             } catch (DateTimeParseException exception) {
-                System.out.println("Wrong format!\nPlease enter time follow next format: HH.mm.ss");
+                System.out.println("Wrong format!\nPlease enter time follow next format: HH.mm");
                 continue;
             }
             if(date.isEqual(LocalDate.now())) {
