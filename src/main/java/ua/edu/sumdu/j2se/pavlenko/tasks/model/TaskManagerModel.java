@@ -21,12 +21,14 @@ public class TaskManagerModel {
     public void createNotRepeatedTask(String title, LocalDateTime time) {
         logger.debug("invocation createNotRepeatedTask() method");
         Task newTask = new Task(title, time);
+        newTask.setActive(true);
         taskList.add(newTask);
     }
 
     public void createRepeatedTask(String title, LocalDateTime startTime, LocalDateTime endTime, int interval) {
         logger.debug("invocation createRepeatedTask() method");
         Task newTask = new Task(title, startTime, endTime, interval);
+        newTask.setActive(true);
         taskList.add(newTask);
     }
 
