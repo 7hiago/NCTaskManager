@@ -11,29 +11,31 @@ public class TaskManagerView {
 
     private Scanner input = new Scanner(System.in);
 
-    private static final String[] startPageContent = new String[]{"Create new task", "Change task",
+    private static final String[] START_PAGE_CONTENT = new String[]{"Create new task", "Change task",
             "Remove task", "View information about available tasks", "View calendar of scheduled tasks", "Quite"};
-    private static final String[] createTaskPageContent = new String[]{"Back", "Create new not repeated task",
+    private static final String[] CREATE_TASK_PAGE_CONTENT = new String[]{"Back", "Create new not repeated task",
             "Create new repeated task"};
-    private static final String[] changeTaskPageContent = new String[]{"Back", "Change title", "Change activation",
+    private static final String[] CHANGE_TASK_PAGE_CONTENT = new String[]{"Back", "Change title", "Change activation",
             "Change start time", "Change end time", "Change interval"};
+
+    public TaskManagerView() {}
 
     public int showStartPage() {
         System.out.println("Enter required option: ");
-        writePageContent(startPageContent);
-        return menuValidationInput(startPageContent.length);
+        writePageContent(START_PAGE_CONTENT);
+        return menuValidationInput(START_PAGE_CONTENT.length);
     }
 
     public int showCreateTaskPage() {
         System.out.println("Enter required option: ");
-        writeSubPageContent(createTaskPageContent);
-        return subMenuValidationInput(createTaskPageContent.length - 1);
+        writeSubPageContent(CREATE_TASK_PAGE_CONTENT);
+        return subMenuValidationInput(CREATE_TASK_PAGE_CONTENT.length - 1);
     }
 
     public int showChangeTaskPage() {
         System.out.println("Enter required option: ");
-        writeSubPageContent(changeTaskPageContent);
-        return subMenuValidationInput(changeTaskPageContent.length - 1);
+        writeSubPageContent(CHANGE_TASK_PAGE_CONTENT);
+        return subMenuValidationInput(CHANGE_TASK_PAGE_CONTENT.length - 1);
     }
 
     public int showActualTaskListPage(String[] list) {
@@ -74,7 +76,7 @@ public class TaskManagerView {
         System.out.println("Time to do: " + notification);
     }
 
-    public String readUserInput() {
+    private String readUserInput() {
         return input.nextLine();
     }
 
@@ -157,7 +159,7 @@ public class TaskManagerView {
         return activation == 1;
     }
 
-    public LocalDate getDate() {
+    private LocalDate getDate() {
         LocalDate date = LocalDate.of(2000, 1, 1);
         boolean notValid = true;
         while (notValid) {
@@ -177,7 +179,7 @@ public class TaskManagerView {
         return date;
     }
 
-    public LocalTime getTime(LocalDate date) {
+    private LocalTime getTime(LocalDate date) {
         LocalTime time = LocalTime.of(0, 0, 0);
         boolean notValid = true;
         while (notValid) {
