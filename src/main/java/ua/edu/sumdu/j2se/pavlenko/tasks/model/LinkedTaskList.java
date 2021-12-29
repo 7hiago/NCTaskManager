@@ -168,7 +168,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
         Iterator<Task> taskIterator = this.iterator();
         StringBuilder string = new StringBuilder("LinkedTaskList{");
         while (taskIterator.hasNext()) {
-            string.append(taskIterator.next().toString()).append(", ");
+            string.append(taskIterator.next().toString()).append("\n");
         }
         return string.append("size=").append(size).append('}').toString();
     }

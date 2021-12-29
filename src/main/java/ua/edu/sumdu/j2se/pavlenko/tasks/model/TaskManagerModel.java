@@ -37,31 +37,7 @@ public class TaskManagerModel {
         String[] list = new String[taskList.size()];
         int i = 0;
         for (Task task : taskList) {
-            StringBuilder item = new StringBuilder();
-            item.append(task.getTitle());
-            if(task.isActive()) {
-                item.append(", active");
-            } else {
-                item.append(", not active");
-            }
-            item.append(", time: ");
-            if(task.isRepeated()) {
-                item.append("from ")
-                        .append(task.getStartTime().toLocalDate())
-                        .append(" ")
-                        .append(task.getStartTime().toLocalTime())
-                        .append(" to ")
-                        .append(task.getEndTime().toLocalDate())
-                        .append(" ")
-                        .append(task.getEndTime().toLocalTime())
-                        .append(" with period: ")
-                        .append(task.getRepeatInterval());
-            } else {
-                item.append(task.getTime().toLocalDate())
-                        .append(" ")
-                        .append(task.getTime().toLocalTime());
-            }
-            list[i++] = item.toString();
+            list[i++] = task.toString();
         }
         return list;
     }

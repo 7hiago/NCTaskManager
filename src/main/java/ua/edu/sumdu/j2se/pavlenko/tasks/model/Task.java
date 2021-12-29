@@ -186,12 +186,31 @@ public class Task implements Cloneable, Serializable {
 
     @Override
     public String toString() {
-        return  "title='" + title + '\'' + ",\n" +
-                " isActive=" + isActive + ",\n" +
-                " time=" + time + ",\n" +
-                " startTime=" + startTime + ",\n" +
-                " endTime=" + endTime + ",\n" +
-                " intervalTime=" + intervalTime;
+        StringBuilder item = new StringBuilder();
+        item.append(title);
+        if(isActive) {
+            item.append(", active");
+        } else {
+            item.append(", not active");
+        }
+        item.append(", time: ");
+        if(isRepeated()) {
+            item.append("from ")
+                    .append(getStartTime().toLocalDate())
+                    .append(" ")
+                    .append(getStartTime().toLocalTime())
+                    .append(" to ")
+                    .append(getEndTime().toLocalDate())
+                    .append(" ")
+                    .append(getEndTime().toLocalTime())
+                    .append(" with period: ")
+                    .append(getRepeatInterval());
+        } else {
+            item.append(getTime().toLocalDate())
+                    .append(" ")
+                    .append(getTime().toLocalTime());
+        }
+        return item.toString();
     }
 
     @Override
