@@ -17,7 +17,7 @@ import java.util.SortedMap;
 public class TaskManagerModel {
     private static Logger logger = Logger.getLogger(TaskManagerModel.class);
     private AbstractTaskList taskList = new LinkedTaskList();
-    private static LocalDateTime lastNotificationTime = LocalDateTime.of(2000,1,1,0,0);
+    private LocalDateTime lastNotificationTime = LocalDateTime.of(2000,1,1,0,0);
 
     public void createNotRepeatedTask(String title, LocalDateTime time) {
         logger.debug("invocation createNotRepeatedTask() method");
