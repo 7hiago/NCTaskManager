@@ -118,7 +118,7 @@ public class TaskManagerView {
     }
 
     public int getInterval() {
-        System.out.println("Enter interval in second");
+        System.out.println("Enter interval in minutes");
         int interval = -1;
         boolean notValid = true;
         while (notValid) {
@@ -135,7 +135,7 @@ public class TaskManagerView {
                 notValid = false;
             }
         }
-        return interval;
+        return interval * 60;
     }
 
     public boolean getActivation() {

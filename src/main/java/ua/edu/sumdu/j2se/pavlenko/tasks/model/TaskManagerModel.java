@@ -17,6 +17,7 @@ import java.util.SortedMap;
 public class TaskManagerModel {
     private static Logger logger = Logger.getLogger(TaskManagerModel.class);
     private AbstractTaskList taskList = new LinkedTaskList();
+    private static LocalDateTime lastNotificationTime = LocalDateTime.of(2000,1,1,0,0);
 
     public void createNotRepeatedTask(String title, LocalDateTime time) {
         logger.debug("invocation createNotRepeatedTask() method");
@@ -137,8 +138,9 @@ public class TaskManagerModel {
     }
 
     public String getStartRunningTasks() {
-        LocalDateTime timeNow = LocalDateTime.now().withNano(0);
-        SortedMap<LocalDateTime, Set<Task>> calendar = Tasks.calendar(taskList, timeNow.minusSeconds(1), timeNow);
+        LocalDateTime timeNow = LocalDateTime.now().withSecond(0).withNano(0);
+        if(lastNotificationTime.isEqual(timeNow)) return "";
+        SortedMap<LocalDateTime, Set<Task>> calendar = Tasks.calendar(taskList, timeNow.minusMinutes(1), timeNow);
         StringBuilder item = new StringBuilder();
         if(calendar.size() != 0) {
             if (calendar.firstKey().isEqual(timeNow)) {
@@ -152,6 +154,7 @@ public class TaskManagerModel {
                 }
             }
         }
+        lastNotificationTime = timeNow;
         return item.toString();
     }
 }

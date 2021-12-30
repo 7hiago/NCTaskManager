@@ -20,7 +20,7 @@ public class Notification extends Thread{
         logger.info("Start notification thread");
         while (true) {
             try {
-                sleep(1000);
+                sleep(30000);
             } catch (InterruptedException exception) {
                 logger.error("Notification thread exception occur\n" + exception);
             }

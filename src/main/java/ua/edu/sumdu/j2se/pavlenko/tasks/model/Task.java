@@ -204,7 +204,8 @@ public class Task implements Cloneable, Serializable {
                     .append(" ")
                     .append(getEndTime().toLocalTime())
                     .append(" with period: ")
-                    .append(getRepeatInterval());
+                    .append(getRepeatInterval()/60)
+                    .append(" min");
         } else {
             item.append(getTime().toLocalDate())
                     .append(" ")
